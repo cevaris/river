@@ -17,12 +17,23 @@ import com.river.RiverState;
 public class TwitterRiver extends River {
 	
 	
-	int counter = 10;
+	int counter = Integer.MAX_VALUE;
 	TwitterStream twitterStream;
 	private Dam dam;	
 	
 	public void setDam(Dam dam) {
 		this.dam = dam;
+		setupExitHook();
+	}
+	
+	private void setupExitHook() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    public void run() { 
+		    	System.out.println("Shutting down...");
+		    	if(dam != null) dam.cleanup();
+		    	System.out.println("Done!");
+		    }
+		});
 	}
 	
 	@Override
@@ -32,21 +43,12 @@ public class TwitterRiver extends River {
 	    StatusListener listener = new StatusListener() {
     	
 			public void onStatus(Status status) {
-				
 				if(counter < 0) {
 					setState(RiverState.STOPPED);
 				} else counter--;
 				
-				
-				
-	//			try {
-					String rawJSON = DataObjectFactory.getRawJSON(status);
-					dam.log(rawJSON);
-	//				br.write(status.getUser().getName() + " : " + status.getText()+"\n");
-	//			} catch (IOException ex){
-	//				ex.printStackTrace();
-	//			}
-					
+				String rawJSON = DataObjectFactory.getRawJSON(status);
+				dam.log(rawJSON);
 			}
 	
 			public void onException(Exception ex) { ex.printStackTrace(); }

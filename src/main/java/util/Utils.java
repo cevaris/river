@@ -8,15 +8,14 @@ import java.util.TimeZone;
 public class Utils {
 	
 	private static final GregorianCalendar CALENDAR = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-	private static final Date DATE = new Date();
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
 
 	public static String getJulianDate(){
         return String.valueOf(CALENDAR.get(GregorianCalendar.DAY_OF_YEAR));
 	}
 	
 	public static String getDate(){
-		return DATE_FORMAT.format(DATE);
+		return DATE_FORMAT.format(new Date());
 	}
 	
 	public static long getTimestamp(){
