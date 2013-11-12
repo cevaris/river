@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+HOME=/Users/cevaris/Documents/workspace/river/
+cd $HOME/target
+java -jar ./com.river-0.0.1-SNAPSHOT-jar-with-dependencies.jar
