@@ -10,23 +10,18 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.util.Progressable;
 
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import twitter4j.TwitterException;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.json.DataObjectFactory;
-
+import com.river.twitter.TwitterDam;
+import com.river.twitter.TwitterRiver;
 
 public class Driver {
 	
 	
-	public static void main(String[] args) throws TwitterException, IOException, URISyntaxException {
+	public static void main(String[] args) throws IOException, URISyntaxException {
 		
-		
-		Twiiter
+		TwitterDam dam = new TwitterDam();
+		TwitterRiver river = new TwitterRiver();
+		river.setDam(dam);
+		river.start();
 		
 //		Configuration configuration = new Configuration();
 //	    FileSystem hdfs = FileSystem.get( new URI( "hdfs://127.0.0.1:9000" ), configuration );

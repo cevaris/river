@@ -1,5 +1,5 @@
 package com.river;
 
-public enum ThreadState {
+public enum RiverState {
 	NOT_STARTED, RUNNING, STOPPED
 }

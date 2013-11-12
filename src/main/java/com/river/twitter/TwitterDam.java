@@ -1,4 +1,4 @@
-package twitter;
+package com.river.twitter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,8 +13,8 @@ public class TwitterDam extends Dam {
 	
 	public TwitterDam() {
 		try{
-			this.log = File.createTempFile(Utils.getJulianDate(), ".log");
-			this.logWriter = new FileWriter(this.log);
+			this.log = new File(TEMP_DIR + Utils.getJulianDate() + ".log");
+			this.logWriter = new FileWriter(this.log,true);
 		} catch(IOException e){
 			e.printStackTrace();
 		} 
