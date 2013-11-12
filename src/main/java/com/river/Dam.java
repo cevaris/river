@@ -26,7 +26,7 @@ public class Dam {
 		try {
 			String logMessage = String.format("%s\t%s\n", Utils.getDate(), message );
 			logWriter.append(logMessage);
-			System.out.print(logMessage);
+//			System.out.print(logMessage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -131,6 +131,7 @@ public class Dam {
 		String filePath = this.log.getAbsolutePath();
 		
 		try {
+			logWriter.flush();
 			logWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();

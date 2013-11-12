@@ -8,6 +8,7 @@ import util.Utils;
 
 import com.river.Dam;
 
+
 public class TwitterDam extends Dam {
 	
 	
@@ -15,6 +16,7 @@ public class TwitterDam extends Dam {
 		try{
 			this.log = new File(TEMP_DIR + Utils.getJulianDate() + ".log");
 			this.logWriter = new FileWriter(this.log,true);
+			System.out.println("Log file: "+this.log.getAbsolutePath());
 		} catch(IOException e){
 			e.printStackTrace();
 		} 

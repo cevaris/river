@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Setup paths
+SOURCE="$( cd "$( dirname "$0" )" && pwd )" 
+cd $SOURCE/..
+
+# Build project
+mvn clean compile assembly:single

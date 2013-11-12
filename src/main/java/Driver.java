@@ -18,6 +18,8 @@ public class Driver {
 	
 	public static void main(String[] args) throws IOException, URISyntaxException {
 		
+		System.out.println("Starting....");
+		
 		TwitterDam dam = new TwitterDam();
 		TwitterRiver river = new TwitterRiver();
 		river.setDam(dam);
