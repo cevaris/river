@@ -19,7 +19,7 @@ public class TwitterDam extends Dam {
 			System.out.println("Log file: "+this.log.getAbsolutePath());
 		} catch(IOException e){
 			e.printStackTrace();
-		} 
+		}
 	}
 
 }

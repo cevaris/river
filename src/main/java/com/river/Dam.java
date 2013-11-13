@@ -4,32 +4,54 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.SynchronousQueue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
 
 import util.Utils;
 
 
-public class Dam {
+
+public class Dam extends Thread {
+	
+	final Stack<String> logQueue = new Stack<String>();
+	
 	
 	protected String TEMP_DIR = System.getProperty("java.io.tmpdir");
 	protected File log;
 	protected File zippedLog;
 	protected FileWriter logWriter;
 	
-	public void log(String message) {
-		try {
-			String logMessage = String.format("%s\t%s\n", Utils.getDate(), message );
-			logWriter.append(logMessage);
-//			System.out.print(logMessage);
-		} catch (IOException e) {
-			e.printStackTrace();
+	
+	@Override
+	public void run() {
+		while(!isInterrupted()){
+			
+			// Nothing to write
+			if(logQueue.size() < 15) 
+				continue;
+			
+			writeToFile();
 		}
+	}
+	private synchronized void writeToFile(){
+		while(!logQueue.isEmpty()){
+			System.out.print(logQueue.peek());
+
+			try {
+				logWriter.append(logQueue.pop());
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+	}
+	public synchronized void log(String message) {
+		logQueue.push(String.format("%s\t%s\n", Utils.getDate(), message ));
 	}
 	
 	
@@ -128,6 +150,7 @@ public class Dam {
 //	}
 
 	public synchronized void cleanup() {
+		
 		String filePath = this.log.getAbsolutePath();
 		
 		try {
@@ -139,7 +162,8 @@ public class Dam {
 		
 		System.out.println(zip(filePath));
 		
-		
+		// Kill self
+//		this.interrupt();
 	}
 
 	

@@ -1,6 +1,9 @@
 package com.river.twitter;
 
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -20,6 +23,7 @@ public class TwitterRiver extends River {
 	int counter = Integer.MAX_VALUE;
 	TwitterStream twitterStream;
 	private Dam dam;	
+	
 	
 	public void setDam(Dam dam) {
 		this.dam = dam;
@@ -52,8 +56,12 @@ public class TwitterRiver extends River {
 			}
 	
 			public void onException(Exception ex) { ex.printStackTrace(); }
-			public void onTrackLimitationNotice(int arg0) {}
-			public void onStallWarning(StallWarning arg0) {}
+			public void onTrackLimitationNotice(int arg0) {
+				System.out.println("Limit Notice: "+arg0);
+			}
+			public void onStallWarning(StallWarning arg0) {
+				System.out.println(arg0);
+			}
 			public void onScrubGeo(long arg0, long arg1)  {}
 			public void onDeletionNotice(StatusDeletionNotice arg0) {}
 	        
