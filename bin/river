@@ -5,4 +5,5 @@ SOURCE="$( cd "$( dirname "$0" )" && pwd )"
 cd $SOURCE/../target
 
 # Execute 
-java -jar com.river-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+#java -jar com.river-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+java -d64 -Xms512m -Xmx4g -jar com.river-0.0.1-SNAPSHOT-jar-with-dependencies.jar

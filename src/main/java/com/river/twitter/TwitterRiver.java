@@ -27,6 +27,7 @@ public class TwitterRiver extends River {
 	
 	public void setDam(Dam dam) {
 		this.dam = dam;
+		this.dam.start();
 		setupExitHook();
 	}
 	

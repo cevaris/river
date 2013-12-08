@@ -18,8 +18,7 @@ import util.Utils;
 
 public class Dam extends Thread {
 	
-	final Stack<String> logQueue = new Stack<String>();
-	
+	final ConcurrentLinkedQueue<String> logQueue = new ConcurrentLinkedQueue<String>();
 	
 	protected String TEMP_DIR = System.getProperty("java.io.tmpdir");
 	protected File log;
@@ -30,7 +29,6 @@ public class Dam extends Thread {
 	@Override
 	public void run() {
 		while(!isInterrupted()){
-			
 			// Nothing to write
 			if(logQueue.size() < 15) 
 				continue;
@@ -40,20 +38,18 @@ public class Dam extends Thread {
 	}
 	private synchronized void writeToFile(){
 		while(!logQueue.isEmpty()){
-			System.out.print(logQueue.peek());
-
 			try {
-				logWriter.append(logQueue.pop());
-				
+				logWriter.append(logQueue.poll());
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 
 		}
 	}
-	public synchronized void log(String message) {
-		logQueue.push(String.format("%s\t%s\n", Utils.getDate(), message ));
-	}
 	
+	public synchronized void log(String message) {
+		String data = String.format( "%s\t%s\n", Utils.getDate(), message );
+		logQueue.offer(data);
+	}
 	
 	public String zip(String filepath)  {
 		File zip = new File(this.log.getAbsolutePath().replace(".log", ".zip"));
